@@ -520,6 +520,62 @@ textarea {
   width:100%
 }
 
+.auction-sticker {
+  margin-bottom:20px;
+}
+
+.auction-sticker h2 {
+  margin:0 0 12px;
+}
+
+.auction-actions {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:16px 0;
+}
+
+.auction-actions button {
+  flex:1;
+  min-height:46px;
+}
+
+#auction-preview {
+  display:block;
+  width:100%;
+  max-height:260px;
+  object-fit:contain;
+  border-radius:12px;
+  margin:16px 0;
+  background:#080808;
+}
+
+.auction-grid {
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:0 14px;
+  margin-top:20px;
+}
+
+.auction-grid .field {
+  min-width:0;
+}
+
+#auction-vin {
+  text-transform:uppercase;
+}
+
+#auction-save {
+  margin-top:8px;
+}
+
+@media (min-width:601px) {
+  .auction-grid {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+
 #vehicle-vin {
   text-transform:uppercase
 }

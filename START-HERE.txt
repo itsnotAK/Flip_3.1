@@ -1,0 +1,49 @@
+FLIP — BRIGHT ORANGE + EDITABLE VEHICLES
+
+INSTALL IN YOUR EXISTING PROJECT
+1. Make a backup copy of your current code files.
+2. Copy index.html, style.css, and script.js from this package into your EXISTING Flip folder, replacing those files.
+3. Keep all three files together. Use the exact filenames above.
+4. Open your original index.html in the same browser/profile as before.
+5. Refresh with Command + Shift + R on Mac.
+
+Do not paste the CSS or JavaScript into the HTML. index.html links to both files.
+This is a local code update. You do not need to deploy a site.
+
+EDIT A SAVED CAR
+Tap a car card. Choose Edit vehicle to change its details, mileage, prices, status, or sale price.
+Choose Add fixes / costs to open its repair plan directly.
+Check repairs and enter costs, or choose Add a repair or expense for any custom item.
+Change existing prices, uncheck a preset to remove its cost, or use x to remove a custom row.
+Click Save changes. Updates replace that vehicle; they do not create a duplicate.
+Cancel (or Escape) discards the editor's unsaved changes.
+Use Inventory > Sold to reopen and edit a sold car too.
+
+DATA
+Uses the SAME flip-vehicles-v2 browser storage key as the previous code.
+If only the older flip-cars data exists, the app imports it and asks you to enter missing prices through Edit vehicle.
+The old sample Honda card was static demo HTML, so it is not treated as a saved car.
+Stay in your original folder and browser to give existing storage the best chance of carrying over.
+Browsers handle storage for file:// pages differently; moving or renaming the HTML file can change which data is visible.
+No data is synced between devices. Clearing browser data can remove it.
+Download data backup exports a JSON copy of your records. There is no backup import button in this version.
+
+ORANGE
+Change --orange near the top of style.css. This version uses #ff8615.
+
+VIN
+Decode VIN performs a real online NHTSA lookup. It needs internet and does not guarantee every field.
+Decoding does not change mileage, repair costs, financial fields, or status.
+Vehicle details remain editable if the lookup is unavailable.
+
+COSTS
+Total in = purchase price + selected preset repairs + custom expenses.
+These are entered estimates/costs, not a separate paid/unpaid accounting ledger.
+Home investment and repair totals cover unsold cars; realized profit covers sold cars.
+On sold cars, actual sale price replaces expected price in the profit calculation.
+Unpriced imported vehicles are omitted from financial totals until their prices are entered.
+
+VERIFICATION
+JavaScript syntax, HTML ID wiring, edit/save persistence, existing record IDs, cents calculations,
+sold profit, new records, buying signals, and corrupt-storage protection were checked.
+A graphical browser was unavailable for visual QA in this environment.

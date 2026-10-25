@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>Flip — Your Garage</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+<main class="app">
+  <header class="garage-header">
+    <div><p class="eyebrow">Your garage</p><h1 id="page-title">Flip smarter.</h1><p class="subtitle" id="page-subtitle">Know every dollar in your next deal.</p></div>
+    <div class="logo" aria-label="Flip">F</div>
+  </header>
+  <section id="home-view" class="view">
+    <section class="investment-card">
+      <h2 class="metric-label">Total invested <span aria-hidden="true">↗</span></h2>
+      <p class="investment-amount" id="total-invested">$0</p>
+      <div class="between investment-footer"><span id="active-count"></span><span id="projected-profit"></span></div>
+    </section>
+    <section class="stats-grid">
+      <div class="stat-card"><h2 class="metric-label">Repair + costs</h2><p class="stat-value" id="repair-total">$0</p><p class="helper">current inventory estimates</p></div>
+      <div class="stat-card"><h2 class="metric-label">Realized profit</h2><p class="stat-value orange" id="realized-profit">$0</p><p class="helper" id="sold-count"></p></div>
+    </section>
+    <button class="primary add-button" data-add type="button"><span aria-hidden="true">＋</span> Add a vehicle <span class="push" aria-hidden="true">↗</span></button>
+    <div class="between section-heading"><h2>Recent flips</h2><span class="helper">Tap to view or edit</span></div>
+    <div id="recent-list" class="vehicle-list"></div>
+  </section>
+  <section id="inventory-view" class="view" hidden>
+    <div class="between"><span class="helper" id="inventory-count"></span><button class="primary" data-add type="button">＋ Add vehicle</button></div>
+    <div id="inventory-filters" class="filters" aria-label="Inventory status filters"></div>
+    <div id="inventory-list" class="vehicle-list"></div>
+  </section>
+  <section id="buying-view" class="view" hidden>
+    <div class="panel"><p class="eyebrow">Evaluate your next flip</p>
+      <div class="field"><label for="buy-market">Expected market value ($)</label><input id="buy-market" type="number" min="0" value="12500"></div>
+      <div class="form-grid"><div class="field"><label for="buy-price">Purchase price ($)</label><input id="buy-price" type="number" min="0" value="7500"></div><div class="field"><label for="buy-repairs">Repairs + other fees ($)</label><input id="buy-repairs" type="number" min="0" value="1500"></div></div>
+      <div class="field"><label for="buy-target">Target profit margin (%)</label><input id="buy-target" type="number" min="1" max="100" value="20"></div>
+      <p class="helper">Margin = profit ÷ sale value. Include transport, auction fees, and other expenses.</p>
+    </div>
+    <div id="buy-decision" class="decision" aria-live="polite"><h2 id="buy-recommendation"></h2><p id="buy-explanation"></p><div id="buy-profit" class="buy-profit"></div><p class="helper">Estimated profit</p><div class="detail-row"><span>Total investment</span><strong id="buy-total"></strong></div><div class="detail-row"><span>Profit margin</span><strong id="buy-margin"></strong></div><div class="detail-row"><span>Maximum purchase price at target</span><strong id="buy-max"></strong></div></div>
+  </section>
+  <footer class="app-footer"><button id="export-backup" class="text-button" type="button">↓ Download data backup</button><p class="helper">Saved in this browser · no device sync</p><p id="storage-message" class="helper" role="status"></p></footer>
+</main>
+<nav class="bottom-nav" aria-label="Main navigation">
+  <button class="nav-item active" data-view="home" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v11h-6v-8H9v8H3z"/></svg>Home</button>
+  <button class="nav-item" data-view="inventory"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5h13M8 12h13M8 19h13M3 5h.01M3 12h.01M3 19h.01"/></svg>Inventory</button>
+  <button class="nav-item" data-view="buying"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m16 8-2 6-6 2 2-6z"/></svg>Buying Decision</button>
+</nav>
+
+<dialog id="vehicle-form-panel" aria-labelledby="editor-title">
+  <div class="dialog-header"><div><p class="eyebrow" id="editor-caption">Build your next flip</p><h2 id="editor-title">Add a vehicle</h2></div><button class="close-button" id="close-editor" type="button" aria-label="Cancel editing">×</button></div>
+  <div class="step-tabs"><button type="button" id="details-tab" class="step-tab active">01 · Vehicle</button><button type="button" id="repairs-tab" class="step-tab">02 · Repairs + costs</button></div>
+  <form id="vehicle-form" novalidate>
+    <section id="vehicle-step">
+      <div class="field"><label for="vehicle-vin">VIN number</label><input id="vehicle-vin" maxlength="17" minlength="17" pattern="[A-HJ-NPR-Za-hj-npr-z0-9]{17}" placeholder="Paste the 17-character VIN" autocomplete="off" spellcheck="false"></div>
+      <button type="button" class="secondary wide" id="decode-vin-button">Decode VIN ↗</button><p id="vin-message" class="helper" role="status">Decode online, or enter details manually.</p>
+      <div class="form-grid">
+        <div class="field"><label for="vehicle-year">Year</label><input id="vehicle-year" type="number" min="1900" max="2100"></div>
+        <div class="field"><label for="vehicle-make">Make</label><input id="vehicle-make"></div>
+        <div class="field"><label for="vehicle-model">Model</label><input id="vehicle-model"></div>
+        <div class="field"><label for="vehicle-trim">Trim</label><input id="vehicle-trim"></div>
+        <div class="field"><label for="vehicle-type">Vehicle type</label><input id="vehicle-type"></div>
+        <div class="field"><label for="vehicle-engine">Engine size</label><input id="vehicle-engine" placeholder="2.4 L"></div>
+        <div class="field"><label for="vehicle-drive">Drivetrain</label><input id="vehicle-drive" placeholder="FWD / RWD / AWD"></div>
+        <div class="field"><label for="vehicle-mileage">Mileage (miles)</label><input id="vehicle-mileage" type="number" min="0" step="1"></div>
+      </div>
+      <div class="field"><label for="vehicle-name">Vehicle name *</label><input id="vehicle-name" required placeholder="2014 Honda Crosstour"></div>
+      <div class="form-grid">
+        <div class="field"><label for="vehicle-date">Purchase date</label><input id="vehicle-date" type="date"></div>
+        <div class="field"><label for="vehicle-purchase">Purchase price ($) *</label><input id="vehicle-purchase" type="number" min="0" step=".01" required></div>
+        <div class="field"><label for="vehicle-expected">Expected sale price ($) *</label><input id="vehicle-expected" type="number" min="0" step=".01" required></div>
+        <div class="field"><label for="vehicle-status">Status</label><select id="vehicle-status"><option>Active</option><option>In Repair</option><option>Ready for Sale</option><option>Sold</option></select></div>
+        <div class="field" id="sale-field" hidden><label for="vehicle-sale">Actual sale price ($) *</label><input id="vehicle-sale" type="number" min="0" step=".01"></div>
+      </div>
+      <button id="next-step" type="button" class="secondary wide">Next: repairs + costs →</button>
+    </section>
+    <section id="repair-step" hidden>
+      <p class="helper">Select work and update prices anytime. Use custom items for additional parts, labor, or fees. These costs are included in your total.</p>
+      <div id="repair-checklist"></div>
+      <h3 class="repair-heading">Custom fixes + expenses</h3>
+      <div id="custom-repairs"></div>
+      <button type="button" id="add-custom-repair" class="secondary wide">＋ Add a repair or expense</button>
+      <div class="field notes-field"><label for="vehicle-obd">OBD-II codes / notes</label><textarea id="vehicle-obd" rows="3" placeholder="P0300 — inspect ignition system"></textarea></div>
+      <button id="back-step" type="button" class="text-button">← Back to vehicle details</button>
+    </section>
+    <div class="editor-summary" aria-live="polite"><div class="between"><span>Total in</span><strong id="form-total">$0</strong></div><p id="form-profit" class="helper"></p></div>
+    <p id="form-error" class="error" role="alert"></p>
+    <div class="actions"><button type="button" id="cancel-editor" class="secondary">Cancel</button><button type="submit" id="save-vehicle" class="primary">Save vehicle</button></div>
+  </form>
+</dialog>
+
+<dialog id="detail-dialog" aria-labelledby="detail-title">
+  <div class="dialog-header"><div><p class="eyebrow">Your flip, in detail</p><h2 id="detail-title"></h2></div><button class="close-button" id="close-detail" type="button" aria-label="Close details">×</button></div>
+  <div class="detail-actions"><button id="edit-vehicle" type="button" class="primary">Edit vehicle</button><button id="edit-repairs" type="button" class="secondary">＋ Add fixes / costs</button></div>
+  <div id="detail-content"></div>
+</dialog>
+<div id="toast" class="toast" hidden role="status"></div>
+</body>
+</html>

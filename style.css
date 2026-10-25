@@ -498,6 +498,24 @@ textarea {
   gap:0 14px
 }
 
+/* Prevent overlapping fields on phones */
+@media (max-width:600px) {
+  #vehicle-form-panel .form-grid {
+    grid-template-columns:minmax(0,1fr);
+  }
+
+  #vehicle-form-panel .form-grid > .field {
+    min-width:0;
+  }
+
+  #vehicle-form-panel .form-grid input,
+  #vehicle-form-panel .form-grid select {
+    box-sizing:border-box;
+    width:100%;
+    min-width:0;
+    max-width:100%;
+  }
+}
 .wide {
   width:100%
 }

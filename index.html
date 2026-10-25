@@ -34,8 +34,125 @@
     <div id="inventory-list" class="vehicle-list"></div>
   </section>
   <section id="buying-view" class="view" hidden>
+    <section class="panel auction-sticker">
+      <p class="eyebrow">Auction sticker scanner</p>
+      <h2>Scan a potential flip</h2>
+
+      <p class="helper">
+        Take a clear, straight-on photo of the sticker.
+        Review and correct every field before saving.
+      </p>
+
+      <div class="auction-actions">
+        <button id="auction-camera" class="secondary" type="button">
+          Take photo
+        </button>
+
+        <button id="auction-upload" class="secondary" type="button">
+          Upload photo
+        </button>
+      </div>
+
+      <input
+        id="auction-camera-file"
+        type="file"
+        accept="image/*"
+        capture="environment"
+        hidden
+      >
+
+      <input
+        id="auction-upload-file"
+        type="file"
+        accept="image/*"
+        hidden
+      >
+
+      <img
+        id="auction-preview"
+        alt="Auction sticker selected for scanning"
+        hidden
+      >
+
+      <button
+        id="auction-scan"
+        class="primary wide"
+        type="button"
+        disabled
+      >
+        Read sticker
+      </button>
+
+      <p id="auction-message" class="helper" role="status">
+        Choose a photo to begin. Scanning requires internet to load.
+      </p>
+
+      <div class="auction-grid">
+        <div class="field">
+          <label for="auction-vin">VIN</label>
+          <input
+            id="auction-vin"
+            type="text"
+            maxlength="17"
+            placeholder="Review or enter VIN"
+            autocomplete="off"
+            spellcheck="false"
+          >
+        </div>
+
+        <div class="field">
+          <label for="auction-mileage">Mileage (miles)</label>
+          <input
+            id="auction-mileage"
+            type="number"
+            min="0"
+            step="1"
+            placeholder="Review or enter mileage"
+          >
+        </div>
+
+        <div class="field">
+          <label for="auction-lane">Lane number</label>
+          <input
+            id="auction-lane"
+            type="text"
+            placeholder="e.g. A or 12"
+          >
+        </div>
+
+        <div class="field">
+          <label for="auction-run">Run number</label>
+          <input
+            id="auction-run"
+            type="text"
+            placeholder="e.g. 0123"
+          >
+        </div>
+      </div>
+
+      <button
+        id="auction-save"
+        class="secondary wide"
+        type="button"
+      >
+        Save reviewed assessment
+      </button>
+
+      <p class="helper">
+        Saves these fields and the calculator values below in this
+        browser. It does not add a car to your inventory.
+      </p>
+
+      <div class="field">
+        <label for="auction-saved">Reopen a saved assessment</label>
+        <select id="auction-saved">
+          <option value="">Choose an assessment</option>
+        </select>
+      </div>
+    </section>
+
     <div class="panel"><p class="eyebrow">Evaluate your next flip</p>
-      <div class="field"><label for="buy-market">Expected market value ($)</label><input id="buy-market" type="number" min="0" value="12500"></div>
+            <div class="field"><label for="buy-market">Expected market value ($)</label><input id="buy-market" type="number" min="0" value="12500"></div>
       <div class="form-grid"><div class="field"><label for="buy-price">Purchase price ($)</label><input id="buy-price" type="number" min="0" value="7500"></div><div class="field"><label for="buy-repairs">Repairs + other fees ($)</label><input id="buy-repairs" type="number" min="0" value="1500"></div></div>
       <div class="field"><label for="buy-target">Target profit margin (%)</label><input id="buy-target" type="number" min="1" max="100" value="20"></div>
       <p class="helper">Margin = profit ÷ sale value. Include transport, auction fees, and other expenses.</p>
